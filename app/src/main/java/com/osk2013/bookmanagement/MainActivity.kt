@@ -1,5 +1,6 @@
 package com.osk2013.bookmanagement
 
+import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import com.osk2013.bookmanagement.dto.BookInfoDto
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -14,12 +18,45 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Realmの初期化
+        Realm.init(this)
+        val config = RealmConfiguration.Builder().build()
+        Realm.setDefaultConfiguration(config)
+
+        val realm = Realm.getDefaultInstance()
+
+        //テストデータの挿入
+        if (realm.where(BookInfoDto::class.java).findAll().count() < 1) {
+            realm.executeTransaction { realm ->
+                val obj = realm.createObject(BookInfoDto::class.java!!, 1)
+                obj.title = "独習C++"
+            }
+            realm.executeTransaction { realm ->
+                val obj = realm.createObject(BookInfoDto::class.java!!, 2)
+                obj.title = "ロベールのC++入門講座"
+            }
+            realm.executeTransaction { realm ->
+                val obj = realm.createObject(BookInfoDto::class.java!!, 3)
+                obj.title = "Effective C++"
+            }
+            realm.executeTransaction { realm ->
+                val obj = realm.createObject(BookInfoDto::class.java!!, 4)
+                obj.title = "C/C++ミスプログラミングケーススタディ"
+            }
+            realm.executeTransaction { realm ->
+                val obj = realm.createObject(BookInfoDto::class.java!!, 5)
+                obj.title = "すべてのプログラマに効く 危険なプログラムの処法箋"
+            }
+        }
+
+
+        val allBook = realm.where(BookInfoDto::class.java).findAll()
+
         val data = ArrayList<String>()
-        data.add("美味しい料理の本")
-        data.add("難しい数学の本")
-        data.add("愛おしい国語の本")
-        data.add("好奇心は猫をも殺す理科の本")
-        data.add("故きを温めて新しきを知る社会の本")
+        allBook.forEach{
+            data.add(it.title)
+        }
+        realm.close()
 
         val bookList = findViewById(R.id.bookList) as ListView
 
