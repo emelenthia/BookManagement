@@ -25,7 +25,8 @@ open class BookInfoAdapter(context: Context, bookInfos: List<BookInfoDto>) : Arr
             view = layoutInflater.inflate(R.layout.book_info_cell, parent, false)
             holder = ViewHolder(
                 view?.title_text_view!!,
-                view.date_text_view
+                view.date_text_view,
+                view.imageView2
             )
             view.tag = holder
         } else {
@@ -35,6 +36,7 @@ open class BookInfoAdapter(context: Context, bookInfos: List<BookInfoDto>) : Arr
         val bookInfo = getItem(position) as BookInfoDto
         holder.titleTextView.text = bookInfo.title
         holder.dateTextView.text = "2019/12/11"//bookInfo.releaseDate
+
 
         return view
     }

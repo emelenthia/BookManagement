@@ -5,13 +5,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
+import android.widget.*
 import com.osk2013.bookmanagement.adapter.BookInfoAdapter
 import com.osk2013.bookmanagement.dto.BookInfoDto
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import kotlinx.android.synthetic.main.book_info_cell.view.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -81,6 +80,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         })
+
+        bookList.setOnItemClickListener { adapterItem, view, position, id ->
+            val name = view.findViewById<TextView>(R.id.title_text_view).text
+            Toast.makeText(this, "clicked: $name", Toast.LENGTH_LONG).show()
+            val intent = Intent(this@MainActivity, BookDetailsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onClick(v: View?) {
