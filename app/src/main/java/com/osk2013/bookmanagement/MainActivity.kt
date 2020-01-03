@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         bookList.setOnItemClickListener { adapterItem, view, position, id ->
             val name = view.findViewById<TextView>(R.id.title_text_view).text
             Toast.makeText(this, "clicked: $name", Toast.LENGTH_LONG).show()
-            val intent = Intent(this@MainActivity, BookDetailsActivity::class.java)
+            val intent = Intent(this@MainActivity, BookAddActivity::class.java)
             startActivity(intent)
         }
     }

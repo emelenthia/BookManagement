@@ -10,6 +10,7 @@ import android.widget.BaseAdapter
 import com.osk2013.bookmanagement.R
 import com.osk2013.bookmanagement.ViewHolder
 import com.osk2013.bookmanagement.dto.BookInfoDto
+import io.realm.Realm
 import kotlinx.android.synthetic.main.book_info_cell.view.*
 import java.text.FieldPosition
 
@@ -36,6 +37,7 @@ open class BookInfoAdapter(context: Context, bookInfos: List<BookInfoDto>) : Arr
         val bookInfo = getItem(position) as BookInfoDto
         holder.titleTextView.text = bookInfo.title
         holder.dateTextView.text = "2019/12/11"//bookInfo.releaseDate
+
 
 
         return view
